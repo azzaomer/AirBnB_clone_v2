@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+# Fabric script  that distributes an archive to your
+# web servers, using the function do_deploy:
 '''Fabric script to generate .tgz archive'''
 
 from fabric.api import local
