@@ -33,6 +33,12 @@ def Python_c(text='is cool'):
 
 
 @app.route('/number/<int:n>', strict_slashes=False)
+def is_numner(n):
+    """display “n is a number” only if n is an integer"""
+    return "{:d} is a number".format(n)
+
+
+@app.route('/number/<int:n>', strict_slashes=False)
 def is_numbertemplate(n):
     """display a HTML page only if n is an integer"""
     return render_template('5-number.html', n=n)
