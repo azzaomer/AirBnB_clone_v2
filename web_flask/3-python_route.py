@@ -24,12 +24,12 @@ def text_c(text):
     """display “C ” followed by the value of the text"""
     return 'C ' + text.replace('_', ' ')
 
+
 @app.route('/python', strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
 def Python_c(text='is cool'):
     """display “Python ”, followed by the value of the text"""
-    return 'Python ' +text.replace('_', ' ')
-
+    return 'Python ' + text.replace('_', ' ')
 
 
 if __name__ == '__main__':
