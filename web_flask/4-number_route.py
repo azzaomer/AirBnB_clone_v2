@@ -32,6 +32,7 @@ def Python_c(text='is cool'):
     return 'Python ' + text.replace('_', ' ')
 
 @app.route('/number/<int:n>', strict_slashes=False)
+def is_numner(n):
     """display “n is a number” only if n is an integer"""
     return f"{:d} is a number".format(n)
 
