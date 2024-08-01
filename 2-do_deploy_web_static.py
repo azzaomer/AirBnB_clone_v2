@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# fabric script to distribute an archive to web servers
 '''
 fabric script to distribute an archive to web servers
 ----NEEDS TO REVISIT SCRIPT
