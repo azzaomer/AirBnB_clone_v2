@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
-from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
-from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
 from models.amenity import Amenity
 from models.review import Review
+import sqlalchemy
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
+from sqlalchemy.orm import relationship
 
 
 # Table for many-to-many relationship between Place and Amenity
