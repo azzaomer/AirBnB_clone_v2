@@ -117,28 +117,38 @@ class HBNBCommand(cmd.Cmd):
         """ Create an object of any class"""
         try:
             class_name = args.split(" ")[0]
-            if len(class_name) == 0:
+        except IndexError:
+            pass
+            if not class_name:
                 print("** class name missing **")
                 return
-            if class_name and class_name not in self.classes:
+            if class_name not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
 
             kwargs = {}
             commands = args.split(" ")
+            new_instance = eval(class_name)()
             for i in range(1, len(commands)):
-                
-                key = commands[i].split("=")[0]
-                value = commands[i].split("=")[1]
-                #key, value = tuple(commands[i].split("="))
+                key, value = tuple(commands[i].split("="))
+                # key = commands[i].split("=")[0]
+                # value = commands[i].split("=")[1]
                 if value.startswith('"'):
                     value = value.strip('"').replace("_", " ")
                 else:
                     try:
                         value = eval(value)
-                    except (SyntaxError, NameError):
-                        continue
-                kwargs[key] = value
+                    # except (SyntaxError, NameError):
+                    except Exception:
+                        print(f" couldnt evaluate {value}")
+                        pass
+                if hasattr(new_instance, key):
+                    setattr(new_instance, key, value)
+
+            storage.new(new_instance)
+            print(new_instance.id)
+            new_instance.save()            
+            """kwargs[key] = value
 
             if kwargs == {}:
                 new_instance = eval(class_name)()
@@ -149,7 +159,7 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
         except ValueError:
             print(ValueError)
-            return
+            return"""
 
     def help_create(self):
         """ Help information for the create method """
