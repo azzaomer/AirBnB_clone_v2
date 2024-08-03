@@ -14,11 +14,11 @@ from models.user import User
 from models.review import Review
 from models.amenity import Amenity
 
+classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
 class DBStorage:
-    """
-
-    """
+    """interaacts with the MySQL database"""
     __engine = None
     __session = None
 
@@ -73,7 +73,6 @@ class DBStorage:
         """
         commit all changes of the current database session (self.__session)
         """
-
         self.__session.commit()
 
     def delete(self, obj=None):
@@ -92,4 +91,8 @@ class DBStorage:
         session_factory = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
         session = scoped_session(session_factory)
-        self.__session = session()
+        self.__session = session
+    
+    def close(self):
+        """method on the private session attribute"""
+        self.__session.remove()
