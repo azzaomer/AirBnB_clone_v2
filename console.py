@@ -147,7 +147,10 @@ class HBNBCommand(cmd.Cmd):
 
             storage.new(new_instance)
             print(new_instance.id)
-            new_instance.save()            
+            new_instance.save()
+        except ValueError:
+            print(ValueError)
+            return        
             """kwargs[key] = value
 
             if kwargs == {}:
@@ -160,6 +163,7 @@ class HBNBCommand(cmd.Cmd):
         except ValueError:
             print(ValueError)
             return"""
+            
 
     def help_create(self):
         """ Help information for the create method """
