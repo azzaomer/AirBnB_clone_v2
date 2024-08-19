@@ -25,7 +25,8 @@ ln -sf /data/web_static/releases/test/ /data/web_static/current
 # Give ownership of the /data/ folder to the ubuntu user AND group
 chown -hR ubuntu:ubuntu /data/
 # update the Nginx configuration to serve the content of /data/web_static/current/ to hbnb_static
-sed -i '51 i \\n\tlocation /hbnb_static {\n\talias /data/web_static/current;\n\t}' /etc/nginx/sites-available/default
+# sed -i '51 i \\n\tlocation /hbnb_static {\n\talias /data/web_static/current;\n\t}' /etc/nginx/sites-available/default
+sed -i '/listen 80 default_server/a location /hbnb_static {talias /data/web_static/current;\n\t}' /etc/nginx/sites-enabled/default
 # restart Nginx
 service nginx restart
 
