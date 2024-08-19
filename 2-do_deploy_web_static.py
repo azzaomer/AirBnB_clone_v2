@@ -5,36 +5,29 @@ fabric script to distribute an archive to web servers
 ----NEEDS TO REVISIT SCRIPT
 '''
 
-import os
-from datetime import datetime
-from fabric.api import env, local, put, run, runs_once
+from fabric.api import put, run, env
+from os.path import exists
 
 
 env.hosts = ['35.174.184.17', '54.164.112.145']
 
 
 def do_deploy(archive_path):
-    """Deploys the static files to the host servers.
-    Args:
-        archive_path (str): The path to the archived static files.
-    """
-    if not os.path.exists(archive_path):
+    """distributes an archive to the web servers"""
+    if exists(archive_path) is False:
         return False
-    file_name = os.path.basename(archive_path)
-    folder_name = file_name.replace(".tgz", "")
-    folder_path = "/data/web_static/releases/{}/".format(folder_name)
-    success = False
     try:
-        put(archive_path, "/tmp/{}".format(file_name))
-        run("mkdir -p {}".format(folder_path))
-        run("tar -xzf /tmp/{} -C {}".format(file_name, folder_path))
-        run("rm -rf /tmp/{}".format(file_name))
-        run("mv {}web_static/* {}".format(folder_path, folder_path))
-        run("rm -rf {}web_static".format(folder_path))
-        run("rm -rf /data/web_static/current")
-        run("ln -s {} /data/web_static/current".format(folder_path))
-        print('New version deployed!')
-        success = True
-    except Exception:
-        success = False
-    return success
+        file_name  = archive_path.split("/")[-1]
+        split_file = file_name.split(".")[0]
+        path = "/data/web_static/releases/"
+        put(archive_path, '/tmp/')
+        run('mkdir -p {}{}/'.format(path, split_file))
+        run('tar -xzf /tmp/{} -C {}{}/'.format(file_name, path, split_file))
+        run('rm /tmp/{}'.format(file_name))
+        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, split_file))
+        run('rm -rf {}{}/web_static'.format(path, split_file))
+        run('rm -rf /data/web_static/current')
+        run('ln -s {}{}/ /data/web_static/current'.format(path, split_file))
+        return True
+    except:
+        return False
